@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="databaseservice:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="database-service-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="databaseservice:war exploded" />
+    </root>
+  </artifact>
+</component>
