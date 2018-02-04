@@ -105,7 +105,7 @@
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="31" parent="9" name="filename">
+    <column id="31" parent="9" name="file_name">
       <Position>2</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
@@ -162,23 +162,23 @@
     </column>
     <key id="42" parent="9" name="PRIMARY">
       <ColNames>user_id
-filename</ColNames>
+file_name</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="43" parent="9" name="user_data_user_id_filename_fk">
+    <foreign-key id="43" parent="9" name="user_data_user_id_file_name_fk">
       <ColNames>user_id
-filename</ColNames>
+file_name</ColNames>
       <RefSchemaName>testdb1</RefSchemaName>
       <RefTableName>user_file</RefTableName>
       <RefColNames>user_id
-filename</RefColNames>
+file_name</RefColNames>
     </foreign-key>
     <column id="44" parent="10" name="user_id">
       <Position>1</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="45" parent="10" name="filename">
+    <column id="45" parent="10" name="file_name">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
@@ -190,7 +190,7 @@ filename</RefColNames>
     </column>
     <key id="47" parent="10" name="PRIMARY">
       <ColNames>user_id
-filename</ColNames>
+file_name</ColNames>
       <Primary>1</Primary>
     </key>
     <foreign-key id="48" parent="10" name="user_file_user_id_fk">
@@ -199,50 +199,64 @@ filename</ColNames>
       <RefTableName>users</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="49" parent="11" name="user_id">
+    <column id="49" parent="11" name="serial_number">
       <Position>1</Position>
+      <DataType>bigint(20) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="50" parent="11" name="user_id">
+      <Position>2</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="50" parent="11" name="filename">
-      <Position>2</Position>
+    <column id="51" parent="11" name="file_name">
+      <Position>3</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="51" parent="11" name="longitude">
-      <Position>3</Position>
-      <DataType>varchar(20)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="52" parent="11" name="latitude">
+    <column id="52" parent="11" name="longitude">
       <Position>4</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="53" parent="11" name="PRIMARY">
+    <column id="53" parent="11" name="latitude">
+      <Position>5</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="54" parent="11" name="serial_number">
+      <ColNames>serial_number</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="55" parent="11" name="PRIMARY">
       <ColNames>user_id
-filename</ColNames>
+file_name</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="54" parent="11" name="user_position_user_id_filename_fk">
+    <key id="56" parent="11" name="serial_number">
+      <ColNames>serial_number</ColNames>
+      <UnderlyingIndexName>serial_number</UnderlyingIndexName>
+    </key>
+    <foreign-key id="57" parent="11" name="user_position_user_id_file_name_fk">
       <ColNames>user_id
-filename</ColNames>
+file_name</ColNames>
       <RefSchemaName>testdb1</RefSchemaName>
       <RefTableName>user_file</RefTableName>
       <RefColNames>user_id
-filename</RefColNames>
+file_name</RefColNames>
     </foreign-key>
-    <column id="55" parent="12" name="id">
+    <column id="58" parent="12" name="id">
       <Position>1</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="56" parent="12" name="password">
+    <column id="59" parent="12" name="password">
       <Position>2</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="57" parent="12" name="PRIMARY">
+    <key id="60" parent="12" name="PRIMARY">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>

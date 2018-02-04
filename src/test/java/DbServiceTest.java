@@ -1,4 +1,5 @@
 import com.barry.dao.DbService;
+import com.barry.po.ReferencePoint;
 import com.barry.po.ReferencePointData;
 import org.junit.Test;
 
@@ -12,10 +13,19 @@ public class DbServiceTest {
     @Test
     public void testImportReferencePoint() {
         DbService dbService = new DbService();
-        String filename = "C:\\Users\\Barry\\Desktop\\本科毕业设计\\ReferencePointpoint_loc2.txt";
+        String filename1 = "C:\\Users\\Barry\\Desktop\\本科毕业设计\\ReferencePointpoint_loc2.txt";
         String filename2 = "C:\\Users\\Barry\\Desktop\\本科毕业设计\\ReferencePointDataAdata1.txt";
         //dbService.importFileItself(filename, "233");
-        //dbService.importFileContent(filename2);
+        dbService.importFileContent(filename1);
+        dbService.importFileContent(filename2);
+        List<ReferencePoint> referencePointList = new ArrayList<ReferencePoint>();
+        dbService.provideReferencePoint(referencePointList);
+        for (ReferencePoint referencePoint : referencePointList) {
+            System.out.print(referencePoint.getRp_id() + " ");
+            System.out.print(referencePoint.getLongitude() + " ");
+            System.out.println(referencePoint.getLatitude());
+        }
+
         List<ReferencePointData> referencePointDataList = new ArrayList<ReferencePointData>();
         dbService.provideReferencePointData(referencePointDataList);
         for (ReferencePointData referencePointData : referencePointDataList) {
