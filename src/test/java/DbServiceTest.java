@@ -8,14 +8,14 @@ public class DbServiceTest {
     @Test
     public void testImportReferencePoint() {
         DbService dbService = new DbService();
-        String filename1 = "src\\main\\resources\\ReferencePointpoint_loc2.txt";
-        String filename2 = "src\\main\\resources\\ReferencePointDataAdata1.txt";
-        //dbService.importFileItself("233", filename1);
-        //dbService.importFileItself("233", filename2);
-        //dbService.importFileContent(filename1);
-        //dbService.importFileContent(filename2);
-        //dbService.deleteUserFile("233", filename2);
-        /* dbService.importFileContent(filename2);
+        String filename1 = "ReferencePointpoint_loc2.txt";
+        String filename2 = "ReferencePointDataAdata1.txt";
+        dbService.importFileItself("233", filename1);
+        dbService.importFileItself("233", filename2);
+        dbService.importFileContent(filename1);
+        dbService.importFileContent(filename2);
+        dbService.deleteUserFile("233", filename2);
+        /*
         List<ReferencePoint> referencePointList = new ArrayList<ReferencePoint>();
         dbService.provideReferencePoint(referencePointList);
         for (ReferencePoint referencePoint : referencePointList) {
