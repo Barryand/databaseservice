@@ -30,7 +30,7 @@ public class DbService {
      *@创建时间  2018/2/4
      *@修改人和其它信息
      */
-    public void importFileItself(String fileName, String userId) {
+    public void importFileItself(String userId, String fileName) {
         FileOperate fileOperater = new FileOperate();
         FileInputStream fileInputStream = fileOperater.inputStreamFile(fileName);
         String sqlUserFile = "insert into user_file values(?,?,?)";
@@ -445,4 +445,121 @@ public class DbService {
         }
         return fileContent;
     }
+    /**
+     *@描述  删除数据库中文件的备份，并删除数据库中该文件的数据
+     *@参数  [userId, fileName]
+     *@返回值  void
+     *@注意
+     *@创建人  Barry
+     *@创建时间  2018/2/7
+     *@修改人和其它信息
+     */
+    public void deleteUserFile(String userId, String fileName) {
+        Connection connection = DbConnect.getConnection();
+        String sqlSearchFile = "SELECT * FROM user_file WHERE file_name = ? ";
+        String sqlUserFile = "DELETE FROM user_file WHERE user_id = ? AND file_name = ? ";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = connection.prepareStatement(sqlSearchFile);
+            ps.setString(1, fileName);
+            rs = ps.executeQuery();
+            if (!rs.next()) {
+                System.out.println("表原本不存在");
+            } else {
+                ps = connection.prepareStatement(sqlUserFile);
+                ps.setString(1, userId);
+                ps.setString(2, fileName);
+                ps.executeUpdate();
+                if (fileName.matches("(.*)ReferencePoint(.*)")
+                        && !fileName.matches("(.*)ReferencePointData(.*)")) {
+                    deleteReferencePoint();
+                } else if (fileName.matches("(.*)ReferencePointData(.*)")) {
+                    deleteReferencePointData();
+                } else if (fileName.matches("(.*)UserData(.*)")) {
+                    deleteUserData(userId, fileName);
+                } else {
+                    System.out.println("删除了一个命名不规范的文件");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DbConnect.closeConnection(rs, ps, connection);
+        }
+    }
+    /**
+     *@描述  删除表格模块
+     *@参数  [sql]
+     *@返回值  void
+     *@注意
+     *@创建人  Barry
+     *@创建时间  2018/2/7
+     *@修改人和其它信息
+     */
+    private void deleteWholeTable(String sql) {
+        Connection connection = DbConnect.getConnection();
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("删除错误，原因可能有：外键");
+        } finally {
+            DbConnect.closeConnection(null, ps, connection);
+        }
+    }
+    /**
+     *@描述  删除整个采样点信息表
+     *@参数
+     *@返回值  void
+     *@注意
+     *@创建人  Barry
+     *@创建时间  2018/2/7
+     *@修改人和其它信息
+     */
+    private void deleteReferencePoint() {
+        String sqlReferencePoint = "DELETE FROM reference_point ";
+        deleteWholeTable(sqlReferencePoint);
+    }
+    /**
+     *@描述  删除整个采样点WiFi数据表
+     *@参数
+     *@返回值  void
+     *@注意
+     *@创建人  Barry
+     *@创建时间  2018/2/7
+     *@修改人和其它信息
+     */
+    private void deleteReferencePointData() {
+        String sqlReferencePointData = "DELETE FROM reference_point_data ";
+        deleteWholeTable(sqlReferencePointData);
+    }
+    /**
+     *@描述  删除用户数据
+     *@参数  [userId, fileName]
+     *@返回值  void
+     *@注意  未测试！未测试！未测试！
+     *@创建人  Barry
+     *@创建时间  2018/2/7
+     *@修改人和其它信息
+     */
+    private void deleteUserData(String userId, String fileName) {
+        Connection connection = DbConnect.getConnection();
+        PreparedStatement ps = null;
+        String sqlUserData = "DELETE FROM user_data WHERE user_id = ? AND file_name = ? ";
+        try {
+            ps = connection.prepareStatement(sqlUserData);
+            ps.setString(1, userId);
+            ps.setString(2, fileName);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("删除错误，原因可能有：外键");
+        } finally {
+            DbConnect.closeConnection(null, ps, connection);
+        }
+    }
+
 }
